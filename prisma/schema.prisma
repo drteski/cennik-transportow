@@ -14,29 +14,21 @@ datasource db {
 }
 
 model Product {
-	id        Int     @id @default(autoincrement())
-	active    Boolean @unique
-	productId Int
-	sku       String
-	ean       String
-	name      String
-	group     Group[]
-}
-
-model Variant {
-	id          Int     @id @default(autoincrement())
-	active      Boolean
-	variantId   Int     @unique
-	sku         String
-	ean         String
-	name        String
-	variantName String
-	group       Group[]
+	id            Int     @id
+	active        Boolean
+	productId     String
+	activeVariant Boolean
+	variantId     String
+	name          String
+	variantName   String
+	sku           String
+	ean           String
+	Group         Group?  @relation(fields: [groupId], references: [id])
+	groupId       Int?
 }
 
 model Group {
 	id      Int       @id @default(autoincrement())
-	name    String
+	name    String    @unique
 	product Product[]
-	variant Variant[]
 }
